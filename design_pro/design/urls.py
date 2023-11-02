@@ -3,8 +3,10 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.base, name='base'),
     path('register/', views.register, name='register'),
+    path('', views.ApplicationsView.as_view(), name='base'),
 
 
 ]
+
+
