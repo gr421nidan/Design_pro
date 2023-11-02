@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h2>Заявки</h2>
+
+{% for i in application %}
+
+<p>Дата и время: {{i.date}}</p>
+<h5>Название: {{i.name}}</h5>
+<p>Категория: {{i.category}}</p>
+<img src="{{i.image.url}}" width="450px" height="300px"/>
+<p>Статус: {{i.status}}</p><br><br>
+
+{% endfor %}
+
+{% endblock %}
+
