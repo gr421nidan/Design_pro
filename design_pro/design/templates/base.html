@@ -21,13 +21,13 @@
         <div class="col-sm-2">
           {% block sidebar %}
             <ul class="sidebar-nav">
-                <li><a href="{% url 'index' %}">Главная</a></li>
-                <li>Регистрация</li>
+                <li><a href="{% url 'base' %}">Главная</a></li>
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
               {% if user.is_authenticated %}
                 <li>User: {{ user.get_username }}</li>
-                <li><a href="{% url 'logout' %}?next={{ request.path }}">Выход</a></li>
+                <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
             {% else %}
-                <li><a href="{% url 'login' %}?next={{ request.path }}">Вход</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
             {% endif %}
 
             </ul>
