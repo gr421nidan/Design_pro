@@ -129,12 +129,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'design.CustomUser'
 
+LOGIN_REDIRECT_URL = '/'
 
 runserver.default_port = "8080"
-
 runserver.default_addr = 'localhost'
-
-LOGIN_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

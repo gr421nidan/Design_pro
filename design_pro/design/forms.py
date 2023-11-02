@@ -1,13 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
 
 from .models import CustomUser
-
-
-# from .models import DesignRequest
-
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин (латиница и дефис)', max_length=30, required=True, widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
@@ -16,7 +11,6 @@ class RegistrationForm(forms.Form):
     password = forms.CharField(label='Пароль', max_length=30, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
     password_confirm = forms.CharField(label='Повторите пароль', max_length=30, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
     agree_to_processing = forms.BooleanField(label='Согласие на обработку персональных данных', required=True)
-
 
     def clean_full_name(self):
         full_name = self.cleaned_data['full_name']
@@ -41,8 +35,3 @@ class RegistrationForm(forms.Form):
     class Meta:
         model = CustomUser
 
-
-# class DesignRequestForm(forms.ModelForm):
-#     class Meta:
-#         model = DesignRequest
-#         fields = ['title', 'description', 'category', 'room_image']

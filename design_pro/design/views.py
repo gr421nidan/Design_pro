@@ -1,12 +1,10 @@
 from django.views import generic
 from django.contrib.auth import login
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 
 from .forms import RegistrationForm
 from .models import CustomUser, Application
-
 
 
 def register(request):

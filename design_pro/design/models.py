@@ -34,6 +34,5 @@ class Application(models.Model):
                               help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
 
-
     def __str__(self):
         return self.name
