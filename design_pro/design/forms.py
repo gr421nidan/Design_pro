@@ -15,6 +15,8 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(label='Email', required=True, widget=forms.EmailInput(attrs={'placeholder': 'example@example.com'}))
     password = forms.CharField(label='Пароль', max_length=30, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
     password_confirm = forms.CharField(label='Повторите пароль', max_length=30, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
+    agree_to_processing = forms.BooleanField(label='Согласие на обработку персональных данных', required=True)
+
 
     def clean_full_name(self):
         full_name = self.cleaned_data['full_name']
