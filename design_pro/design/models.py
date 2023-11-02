@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
@@ -17,17 +18,22 @@ class Category(models.Model):
         return self.category
 
 
+
 class Application(models.Model):
-    name = models.CharField(max_length=254, verbose_name='Название заявки', blank=False)
-    description = models.TextField(max_length=1000, verbose_name='Описание', blank=False)
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        megabyte_limit = 2.0
+        if filesize > megabyte_limit * 1024 * 1024:
+            raise ValidationError("Max file size is %sMB" % str(megabyte_limit))
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=1000, default='something')
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True)
-    photo_file = models.ImageField(max_length=254, upload_to='images', blank=False, validators=[
-        FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])])
-    user = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(verbose_name='Время создания заявки', auto_now_add=True)
     status = models.CharField(max_length=254, default='Новая')
+    image = models.ImageField(upload_to="media/", verbose_name="Фотография",
+                              help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
+                              validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
+
 
     def __str__(self):
-        return f'{self.name} ({self.date})'
-
-
+        return self.name

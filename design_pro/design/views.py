@@ -1,36 +1,14 @@
+from django.views import generic
 from django.contrib.auth import login
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 
-from .forms import  RegistrationForm
-from .models import CustomUser
+from .forms import RegistrationForm
+from .models import CustomUser, Application
 
 
-def base(request):
-    return render(request, 'base.html')
 
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('login')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'registration/register.html', {'form': form})
-#
-# #
-# def register(request):
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST)  # Используйте свою собственную форму регистрации
-#         if form.is_valid():
-#             form.save()
-#             return redirect('login')
-#     else:
-#         form = CustomUserCreationForm()  # Используйте свою собственную форму регистрации
-#     return render(request, 'registration/register.html', {'form': form})
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -49,3 +27,8 @@ def register(request):
 
     return render(request, 'registration/register.html', {'form': form})
 
+
+class ApplicationsView(generic.ListView):
+    model = Application
+    template_name = 'applications.html'
+    context_object_name = 'application'
