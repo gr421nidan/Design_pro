@@ -1,10 +1,13 @@
+from django.http import HttpResponseRedirect
 from django.views import generic
 from django.contrib.auth import login
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.views.generic import CreateView
 
 from .forms import RegistrationForm
 from .models import CustomUser, Application
+
 
 
 def register(request):
@@ -30,3 +33,19 @@ class ApplicationsView(generic.ListView):
     model = Application
     template_name = 'applications.html'
     context_object_name = 'application'
+
+
+class MyRequestView(generic.ListView):
+    model = Application
+    template_name = 'my_request.html'
+    context_object_name = 'application'
+
+
+class GetRequest(CreateView):
+    model = Application
+    fields = ['name', 'description', 'category', 'image']
+    template_name = 'get_request.html'
+
+
+
+

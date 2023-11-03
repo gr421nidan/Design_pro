@@ -33,6 +33,8 @@ class Application(models.Model):
     image = models.ImageField(upload_to="media/", verbose_name="Фотография",
                               help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
+    user = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
+
