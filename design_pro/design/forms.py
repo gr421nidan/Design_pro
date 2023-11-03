@@ -2,6 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 import re
 
+from django.core.validators import FileExtensionValidator
+
 from .models import CustomUser
 
 class RegistrationForm(forms.Form):
@@ -34,4 +36,3 @@ class RegistrationForm(forms.Form):
         return password_confirm
     class Meta:
         model = CustomUser
-
