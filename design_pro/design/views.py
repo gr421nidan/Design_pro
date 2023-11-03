@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth import login
 from django.shortcuts import render
@@ -45,6 +46,8 @@ class GetRequest(CreateView):
     model = Application
     fields = ['name', 'description', 'category', 'image']
     template_name = 'get_request.html'
+    success_url = reverse_lazy('my_request')
+
 
 
 
