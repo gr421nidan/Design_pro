@@ -5,10 +5,10 @@ from django.contrib.auth import login
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic import CreateView
-
+from django.views.generic import DeleteView
 from .forms import RegistrationForm
 from .models import CustomUser, Application
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def register(request):
@@ -36,10 +36,13 @@ class ApplicationsView(generic.ListView):
     context_object_name = 'application'
 
 
-class MyRequestView(generic.ListView):
+class MyRequestView(LoginRequiredMixin, generic.ListView):
     model = Application
     template_name = 'my_request.html'
     context_object_name = 'application'
+
+    def get_queryset(self):
+        return Application.objects.filter(user=self.request.user)
 
 
 class GetRequest(CreateView):
@@ -48,7 +51,8 @@ class GetRequest(CreateView):
     template_name = 'get_request.html'
     success_url = reverse_lazy('my_request')
 
-
-
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 

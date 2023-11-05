@@ -1,5 +1,7 @@
 {% load static %}
 {% block content %}
+
+<a href="{% url 'get_request' %}">Подать заявку</a>
 <h2>Мои заявки</h2>
 
 
@@ -7,12 +9,13 @@
 
 <p>Дата и время: {{i.date}}</p>
 <h5>Название: {{i.name}}</h5>
-<p>Описание: {[i.description}}</p>
+<p>Описание: {{i.description}}</p>
 <p>Категория: {{i.category}}</p>
 <img src="{{i.image.url}}" width="450px" height="300px"/>
 <p>Статус: {{i.status}}</p><br><br>
 
-<!--<button type="submit">Удалить</button>-->
+<button type="submit">Удалить</button><br><br>
+
 {% endfor %}
 
 {% endblock %}
