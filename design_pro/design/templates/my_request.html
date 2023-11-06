@@ -1,6 +1,6 @@
 {% load static %}
 {% block content %}
-
+<a href="{% url 'base' %}">Главная</a>
 <a href="{% url 'get_request' %}">Подать заявку</a>
 <h2>Мои заявки</h2>
 
@@ -14,10 +14,13 @@
 <img src="{{i.image.url}}" width="450px" height="300px"/>
 <p>Статус: {{i.status}}</p><br><br>
 
-<button type="submit">Удалить</button><br><br>
+<a href="{% url 'request_delete' i.id %}">Удалить</a><br><br>
 
 {% endfor %}
 
 {% endblock %}
+
+
+
 
 

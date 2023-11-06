@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth import login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as dj_login
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic import CreateView
@@ -29,6 +30,25 @@ def register(request):
 
     return render(request, 'registration/register.html', {'form': form})
 
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                dj_login(request, user)
+                return redirect('cabinet')
+            else:
+                form.add_error(None, 'Неверный логин или пароль')
+    else:
+        form = LoginForm()
+    return render(request, "registration/login.html", {"form": form})
+
+def logout(request):
+    return render(request, 'logged_out.html')
+
 
 class ApplicationsView(generic.ListView):
     model = Application
@@ -54,5 +74,13 @@ class GetRequest(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class RequestDelete(DeleteView):
+    model = Application
+    template_name = 'application_confirm_delete.html'
+    context_object_name = 'application'
+    success_url = reverse_lazy('my_request')
+
 
 

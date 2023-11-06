@@ -5,8 +5,11 @@ from . import views
 urlpatterns = [
     path('register/', views.register, name='register'),
     path('', views.ApplicationsView.as_view(), name='base'),
+    path('login/', views.login, name='login'),
+    path('logged_out/', views.logout, name='logged_out'),
     path('my_request/', views.MyRequestView.as_view(), name='my_request'),
     path('get_request/', views.GetRequest.as_view(), name='get_request'),
+    path('request/<int:pk>/delete/', views.RequestDelete.as_view(), name='request_delete'),
 
 
 ]

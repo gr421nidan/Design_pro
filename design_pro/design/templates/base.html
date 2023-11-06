@@ -25,12 +25,12 @@
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
                 {% if user.is_authenticated %}
                  <li>User: {{ user.get_username }}</li>
-                <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
+                <li><a href="{% url 'logged_out' %}">Выйти</a></li>
                 <li><a href="{% url 'my_request' %}">Мои заявки</a></li>
                 <li><a href="{% url 'get_request' %}">Подать заявку</a></li>
                 {% else %}
 
-                <li><a href="{% url 'login' %}?next={{ request.path }}">Вход</a></li>
+                <li><a href="{% url 'login' %}">Вход</a></li>
 
                 {% endif %}
 
