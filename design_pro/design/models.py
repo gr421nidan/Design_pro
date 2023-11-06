@@ -29,11 +29,21 @@ class Application(models.Model):
     description = models.TextField(max_length=1000, default='something')
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(verbose_name='Время создания заявки', auto_now_add=True)
-    status = models.CharField(max_length=254, default='Новая')
     image = models.ImageField(upload_to="media/", verbose_name="Фотография",
                               help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']), validate_image])
     user = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True)
+    REQUEST_STATUS = (
+        ('Новая', 'Новая'),
+        ('Принято в работу', 'Принято в работу'),
+        ('Выполнено', 'Выполнено'),
+    )
+    status = models.CharField(
+        max_length=16,
+        choices=REQUEST_STATUS,
+        default='Новая',
+        blank=True,
+        verbose_name="Статус")
 
     def __str__(self):
         return self.name

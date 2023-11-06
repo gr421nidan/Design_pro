@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .models import CustomUser, Application
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -23,7 +23,7 @@ def register(request):
             user = CustomUser.objects.create_user(username, email, password)
             user.first_name = full_name
             user.save()
-            login(request, user)
+            dj_login(request, user)
             return redirect('base')
     else:
         form = RegistrationForm()
@@ -55,6 +55,10 @@ class ApplicationsView(generic.ListView):
     template_name = 'applications.html'
     context_object_name = 'application'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['num_application'] = Application.objects.filter(status__exact='Принято в работу').count()
+        return context
 
 class MyRequestView(LoginRequiredMixin, generic.ListView):
     model = Application
@@ -81,6 +85,8 @@ class RequestDelete(DeleteView):
     template_name = 'application_confirm_delete.html'
     context_object_name = 'application'
     success_url = reverse_lazy('my_request')
+
+
 
 
 
