@@ -68,6 +68,13 @@ class MyRequestView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Application.objects.filter(user=self.request.user)
 
+    def get_queryset(self):
+        status = self.request.GET.get('status')
+        queryset = Application.objects.filter(user=self.request.user).order_by('-date')
+        if status:
+            queryset = queryset.filter(status=status)
+        return queryset
+
 
 class GetRequest(CreateView):
     model = Application

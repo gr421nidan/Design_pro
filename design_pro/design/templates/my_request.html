@@ -1,7 +1,17 @@
 {% load static %}
 {% block content %}
-<a href="{% url 'base' %}">Главная</a>
-<a href="{% url 'get_request' %}">Подать заявку</a>
+<a href="{% url 'base' %}">Главная</a><br>
+<a href="{% url 'get_request' %}">Подать заявку</a><br><br>
+<form method="get">
+    <label for="status">Статус</label>
+    <select name="status">
+        <option value="">Все</option>
+        <option value="Новая">Новая</option>
+        <option value="Принято в работу">Принято в работу</option>
+        <option value="Выполнено">Выполнено</option>
+    </select>
+    <input type="submit" value="Применить">
+</form>
 <h2>Мои заявки</h2>
 
 
