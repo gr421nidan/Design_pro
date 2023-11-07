@@ -4,7 +4,7 @@ import re
 
 from django.core.validators import FileExtensionValidator
 
-from .models import CustomUser
+from .models import CustomUser, Application
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин (латиница и дефис)', max_length=30, required=True, widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
@@ -40,3 +40,27 @@ class RegistrationForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин (латиница и дефис)', max_length=30, required=True, widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
     password = forms.CharField(label='Пароль', max_length=30, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+
+
+class ChangeRequestStatusForm(forms.ModelForm):
+    comment = forms.CharField(required=False)
+    design = forms.ImageField(required=False)
+    class Meta:
+        model = Application
+        fields = ['status', 'design', 'comment']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_status = cleaned_data.get('status')
+
+        if new_status == 'Выполнено':
+            design = cleaned_data.get('design')
+            if not design:
+                raise forms.ValidationError("При смене статуса на 'Выполнено' необходимо прикрепить изображение дизайна")
+
+        if new_status == 'Принято в работу':
+            comment = cleaned_data.get('comment')
+            if not comment:
+                raise forms.ValidationError("При смене статуса на 'Принято в работу' необходимо указать комментарий")
+
+        return cleaned_data
