@@ -6,8 +6,8 @@ from django.contrib.auth import login as dj_login
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic import CreateView
-from django.views.generic import DeleteView
-from .forms import RegistrationForm, LoginForm
+from django.views.generic import DeleteView, UpdateView
+from .forms import RegistrationForm, LoginForm, ChangeRequestStatusForm
 from .models import CustomUser, Application, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -114,3 +114,8 @@ class CreateCategory(CreateView):
     success_url = reverse_lazy('change_category')
 
 
+class ChangeStatusRequest(UpdateView):
+    model = Application
+    form_class = ChangeRequestStatusForm
+    template_name = 'change_status_request.html'
+    success_url = reverse_lazy('base')
