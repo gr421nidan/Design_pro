@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from .forms import RegistrationForm, LoginForm
-from .models import CustomUser, Application
+from .models import CustomUser, Application, Category
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -94,6 +94,23 @@ class RequestDelete(DeleteView):
     success_url = reverse_lazy('my_request')
 
 
+class ChangeCategory(generic.ListView):
+    model = Category
+    template_name = 'change_category.html'
+    context_object_name = 'category'
 
+
+class CategoryDelete(DeleteView):
+    model = Category
+    template_name = 'category_confirm_delete.html'
+    context_object_name = 'category'
+    success_url = reverse_lazy('change_category')
+
+
+class CreateCategory(CreateView):
+    model = Category
+    fields = ['category']
+    template_name = 'create_category.html'
+    success_url = reverse_lazy('change_category')
 
 
