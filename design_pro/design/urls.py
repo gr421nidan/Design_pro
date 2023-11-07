@@ -13,7 +13,7 @@ urlpatterns = [
     path('change_category/', views.ChangeCategory.as_view(), name='change_category'),
     path('category/<int:pk>/delete/', views.CategoryDelete.as_view(), name='category_delete'),
     path('create_category/', views.CreateCategory.as_view(), name='category_create'),
-
+    path('request/<int:pk>/change_status/', views.ChangeStatusRequest.as_view(), name='change_request_status'),
 ]
 
 
