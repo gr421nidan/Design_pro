@@ -2,7 +2,19 @@
 {% load static %}
 {% block content %}
 <h2>Заявки</h2>
+{% if user.is_superuser %}
+{% for i in application %}
 
+<p>Дата и время: {{i.date}}</p>
+<h5>Название: {{i.name}}</h5>
+<p>Категория: {{i.category}}</p>
+<img src="{{i.image.url}}" width="450px" height="300px"/>
+<p>Статус: {{i.status}}</p>
+{% if i.status == 'Новая' %}
+<a href="{% url 'change_request_status' i.id %}">Именить статус</a><br><br>
+{% endif %}
+{% endfor %}
+{% else %}
 {% for i in application %}
 
 <p>Дата и время: {{i.date}}</p>
@@ -10,8 +22,9 @@
 <p>Категория: {{i.category}}</p>
 <img src="{{i.image.url}}" width="450px" height="300px"/>
 <p>Статус: {{i.status}}</p><br><br>
-
 {% endfor %}
 
+{% endif %}
 {% endblock %}
+
 
