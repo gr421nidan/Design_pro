@@ -1,0 +1,10 @@
+{% block content %}
+
+<h1>Удаление категории</h1>
+<p>Ты уверен что хочешь удалить категорию: {{ category.category }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Да, удалить">
+</form>
+{% endblock %}

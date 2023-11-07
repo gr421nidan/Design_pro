@@ -1,0 +1,12 @@
+{% load static %}
+{% block content %}
+<a href="{% url 'base' %}">Главная</a><br>
+<a href="{% url 'category_create' %}">Создать категорию</a>
+<h4>Изменение категорий</h4>
+{% for i in category %}
+<p>Категория: {{i.category}}</p>
+<a href="{% url 'category_delete' i.id %}">Удалить</a><br>
+{% endfor %}
+
+{% endblock %}
+

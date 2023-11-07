@@ -24,14 +24,18 @@
                  <li><a href="{% url 'base' %}">Главная</a></li>
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
                 {% if user.is_authenticated %}
-                 <li>User: {{ user.get_username }}</li>
-                <li><a href="{% url 'logged_out' %}">Выйти</a></li>
-                <li><a href="{% url 'my_request' %}">Мои заявки</a></li>
-                <li><a href="{% url 'get_request' %}">Подать заявку</a></li>
+                    {% if user.is_superuser %}
+                    <li><a href="{% url 'logged_out' %}">Выйти</a></li>
+                    <p>Hello, admin.</p>
+                    <li><a href="{% url 'change_category' %}">Именить категории</a></li>
+                    {% else %}
+                    <li>User: {{ user.get_username }}</li>
+                     <li><a href="{% url 'logged_out' %}">Выйти</a></li>
+                    <li><a href="{% url 'my_request' %}">Мои заявки</a></li>
+                     <li><a href="{% url 'get_request' %}">Подать заявку</a></li>
+                    {% endif %}
                 {% else %}
-
-                <li><a href="{% url 'login' %}">Вход</a></li>
-
+                    <li><a href="{% url 'login' %}">Вход</a></li>
                 {% endif %}
 
             </ul>
